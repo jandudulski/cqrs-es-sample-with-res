@@ -34,21 +34,17 @@ module Domain
       apply Events::ItemRemovedFromBasket.new(data: {order_id: id, product_id: product_id})
     end
 
-    attr_reader :id
-    private
-    attr_accessor :state, :customer_id, :number, :order_lines
-
-    def apply_order_submitted(event)
+    on OrderSubmitted do |event|
       @customer_id = event.data[:customer_id]
       @number = event.data[:order_number]
       @state = :submitted
     end
 
-    def apply_order_expired(event)
+    on OrderExpired do |event|
       @state = :expired
     end
 
-    def apply_item_added_to_basket(event)
+    on ItemAddedToBasket do |event|
       product_id = event.data[:product_id]
       order_line = find_order_line(product_id)
       unless order_line
@@ -58,13 +54,17 @@ module Domain
       order_line.increase_quantity
     end
 
-    def apply_item_removed_from_basket(event)
+    on ItemRemovedFromBasket do |event|
       product_id = event.data[:product_id]
       order_line = find_order_line(product_id)
       return unless order_line
       order_line.decrease_quantity
       remove_order_line(order_line) if order_line.empty?
     end
+
+    attr_reader :id
+    private
+    attr_accessor :state, :customer_id, :number, :order_lines
 
     def find_order_line(product_id)
       @order_lines.select{|line| line.product_id == product_id}.first

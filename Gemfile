@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 gem 'codeclimate-test-reporter', group: :test, require: nil
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1'
+gem 'rails', '5.1.5'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use SCSS for stylesheets
@@ -45,4 +45,4 @@ group :development, :test do
   gem 'spring'
 end
 
-gem 'rails_event_store', :git => "git@github.com:mpraglowski/rails_event_store.git", :branch => "active_job_dispatcher"
+gem 'rails_event_store', '~> 0.26.0'
