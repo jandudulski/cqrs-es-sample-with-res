@@ -1,4 +1,4 @@
-class CreateOrders < ActiveRecord::Migration
+class CreateOrders < ActiveRecord::Migration::Current
   def change
     create_table :orders do |t|
       t.string :uid

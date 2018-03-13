@@ -1,4 +1,4 @@
-class CreateEventsTable < ActiveRecord::Migration
+class CreateEventsTable < ActiveRecord::Migration::Current
 
   def self.up
     create_table(:event_store_events) do |t|
